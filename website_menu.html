@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Coffee Shop Fintech</title>
+    <style>
+        :root {
+            --bg: #f7f3ee;
+            --text: #3c2f2f;
+            --card: #fff;
+            --primary: #5b3a29
+        }
+
+        body.dark {
+            --bg: #0f0f0f;
+            --text: #ececec;
+            --card: #1b1b1b;
+            --primary: #d4b48c
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: 0.28s ease all
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, Poppins, system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text)
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 22px;
+            background: var(--card);
+            z-index: 40;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08)
+        }
+
+        nav a {
+            margin-left: 16px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600
+        }
+
+        .toggle-btn {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 0;
+            background: var(--primary);
+            color: #fff;
+            cursor: pointer
+        }
+
+        .menu-item:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 14px 26px rgba(0, 0, 0, 0.12);
+        }
+
+        .menu-item img:hover {
+            opacity: 0.88;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .toggle-btn:hover,
+        .play-btn:hover {
+            transform: scale(1.08);
+            opacity: 0.9;
+        }
+
+        /* HERO (parallax) */
+        header {
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        header .bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80');
+            background-size: cover;
+            background-position: center;
+            transform: translateY(0);
+            will-change: transform
+        }
+
+        header .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.18))
+        }
+
+        header h1 {
+            position: relative;
+            color: #fff;
+            font-size: 34px;
+            letter-spacing: 1px;
+            z-index: 2
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 28px
+        }
+
+        .menu-category {
+            font-size: 22px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            display: inline-block;
+            padding-bottom: 6px;
+            margin-bottom: 18px
+        }
+
+        .menu-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 18px
+        }
+
+        .menu-item {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 14px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transform: translateY(18px);
+            opacity: 0
+        }
+
+        .menu-item.show {
+            transform: none;
+            opacity: 1
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+            display: block
+        }
+
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px
+        }
+
+        h3 {
+            margin: 8px 0 0 0;
+            color: var(--primary);
+            font-size: 18px
+        }
+
+        p {
+            margin: 6px 0;
+            font-size: 14px;
+            opacity: 0.85
+        }
+
+        .price {
+            font-weight: 700
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .play-btn {
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 0;
+            background: var(--primary);
+            color: #fff;
+            cursor: pointer
+        }
+
+        footer {
+            text-align: center;
+            padding: 18px;
+            background: var(--primary);
+            color: #fff;
+            margin-top: 26px
+        }
+
+        @media (max-width:640px) {
+            header {
+                height: 220px
+            }
+
+            header h1 {
+                font-size: 22px
+            }
+
+            .menu-item img {
+                height: 130px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div style="font-weight:800">Coffee Shop Fintech</div>
+        <div style="display:flex;align-items:center">
+            <a href="#coffee">Coffee</a>
+            <a href="#noncoffee">Non Coffee</a>
+            <a href="#snack">Snack</a>
+            <div style="width:10px"></div>
+            <div class="controls">
+                <button class="toggle-btn" onclick="toggleDark()">Dark</button>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <div class="bg" data-speed="0.3"></div>
+        <div class="overlay"></div>
+        <h1>Fresh Coffee, Smarter Vibes ☕</h1>
+    </header>
+
+    <main class="container">
+        <section id="coffee">
+            <div class="menu-category">Coffee</div>
+            <div class="menu-list">
+                <article class="menu-item" data-speed="0.06">
+                    <img loading="lazy" src="images/espresso.jpg" alt="Espresso" />
+                    <h3>Espresso</h3>
+                    <p>Strong single shot for the purist.</p>
+                    <div class="meta">
+                        <div class="price">Rp 18.000</div>
+                    </div>
+                </article>
+
+                <article class="menu-item" data-speed="0.08">
+                    <img loading="lazy" src="images/americano.jpg" alt="Americano" />
+                    <h3>Americano</h3>
+                    <p>Espresso diluted with hot water — smooth and light.</p>
+                    <div class="meta">
+                        <div class="price">Rp 22.000</div>
+                    </div>
+                </article>
+
+                <article class="menu-item" data-speed="0.05">
+                    <img loading="lazy" src="images/capuccino.jpg" alt="Cappuccino" />
+                    <h3>Cappuccino</h3>
+                    <p>Velvety milk foam with a strong espresso base.</p>
+                    <div class="meta">
+                        <div class="price">Rp 25.000</div>
+                    </div>
+                </article>
+
+                <article class="menu-item" data-speed="0.07">
+                    <img loading="lazy" src="images/latte.jpg" alt="Latte" />
+                    <h3>Latte</h3>
+                    <p>Creamy steamed milk with a gentle espresso shot.</p>
+                    <div class="meta">
+                        <div class="price">Rp 24.000</div>
+                    </div>
+                </article>
+
+                <article class="menu-item" data-speed="0.04">
+                    <img loading="lazy" src="images/mocha.jpg" alt="Mocha" />
+                    <h3>Mocha</h3>
+                    <p>Chocolate and coffee, happy together.</p>
+                    <div class="meta">
+                        <div class="price">Rp 26.000</div>
+                    </div>
+                </article>
+
+                <article class="menu-item" data-speed="0.04">
+                    <img loading="lazy" src="images/dalgona.jpg" alt="dalgona" />
+                    <h3>Dalgona Coffe</h3>
+                    <p>Dalgona coffee with egg white cream. Try and make the difference!.</p>
+                    <div class="meta">
+                        <div class="price">Rp 28.000</div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="noncoffee" style="margin-top:28px">
+            <div class="menu-category">Non Coffee</div>
+            <div class="menu-list">
+                <article class="menu-item">
+                    <img loading="lazy" src="images/matcha_latte.jpg" alt="Matcha Latte" />
+                    <h3>Matcha Latte</h3>
+                    <p>Premium matcha powder whisked to perfect creaminess.</p>
+                    <div class="meta">
+                        <div class="price">Rp 28.000</div>
+                    </div>
+                </article>
+
+                <article class="menu-item">
+                    <img loading="lazy" src="images/ice_chocholate.jpg" alt="Ice Chocolate" />
+                    <h3>Ice Chocolate</h3>
+                    <p>Creamy, cold, and nostalgic.</p>
+                    <div class="meta">
+                        <div class="price">Rp 27.000</div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="snack" style="margin-top:28px">
+            <div class="menu-category">Snack</div>
+            <div class="menu-list">
+                <article class="menu-item">
+                    <img loading="lazy" src="images/french_fries.jpg" alt="French Fries" />
+                    <h3>French Fries</h3>
+                    <p>Crispy golden fries, perfect with coffee.</p>
+                    <div class="meta">
+                        <div class="price">Rp 20.000</div>
+                    </div>
+                </article>
+
+                <article class="menu-item">
+                    <img loading="lazy" src="images/chicken_wings.jpg" alt="Chicken Wings" />
+                    <h3>Chicken Wings</h3>
+                    <p>Spicy & juicy wings for snack lovers.</p>
+                    <div class="meta">
+                        <div class="price">Rp 30.000</div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>© 2025 Coffee Shop Fintech. All Rights Reserved.</footer>
+
+    <script>
+        // reveal on scroll
+        const items = document.querySelectorAll('.menu-item');
+        const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); }); }, { threshold: 0.12 });
+        items.forEach(i => io.observe(i));
+
+        // parallax
+        function parallax() {
+            const scr = window.scrollY;
+            document.querySelectorAll('[data-speed]').forEach(el => {
+                const speed = parseFloat(el.dataset.speed) || 0.04;
+                el.style.transform = `translateY(${-(scr * speed)}px)`;
+            });
+        }
+        window.addEventListener('scroll', parallax, { passive: true }); parallax();
+
+        // audio ambience
+        let audioCtx, noiseNode, oscNode, master; const toggle = document.getElementById('toggle-audio'); let playing = false;
+        function startAmbient() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)(); master = audioCtx.createGain(); master.gain.value = 0.18; master.connect(audioCtx.destination);
+            oscNode = audioCtx.createOscillator(); oscNode.type = 'sine'; oscNode.frequency.value = 60; const oscGain = audioCtx.createGain(); oscGain.gain.value = 0.6; oscNode.connect(oscGain);
+            const lfo = audioCtx.createOscillator(); lfo.frequency.value = 0.07; const lfoGain = audioCtx.createGain(); lfoGain.gain.value = 12; lfo.connect(lfoGain); lfoGain.connect(oscNode.frequency);
+            const bufferSize = 2 * audioCtx.sampleRate; const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate); const output = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) output[i] = (Math.random() * 2 - 1) * 0.4; noiseNode = audioCtx.createBufferSource(); noiseNode.buffer = noiseBuffer; noiseNode.loop = true;
+            const noiseFilter = audioCtx.createBiquadFilter(); noiseFilter.type = 'lowpass'; noiseFilter.frequency.value = 1200; noiseNode.connect(noiseFilter);
+            const noiseGain = audioCtx.createGain(); noiseGain.gain.value = 0.35; noiseFilter.connect(noiseGain);
+            oscGain.connect(master); noiseGain.connect(master);
+            oscNode.start(); lfo.start(); noiseNode.start();
+        }
+        function stopAmbient() { if (!audioCtx) return; audioCtx.close(); audioCtx = null; playing = false; toggle.textContent = 'Play Ambience'; }
+        toggle.addEventListener('click', () => { if (!playing) { startAmbient(); playing = true; toggle.textContent = 'Pause Ambience'; } else { stopAmbient(); } });
+        function toggleDark() { document.body.classList.toggle('dark'); }
+    </script>
+</body>
+
+</html>
